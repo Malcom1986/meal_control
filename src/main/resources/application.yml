@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: nutrition-control
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/malcom?username=malcom&password=qwerty
