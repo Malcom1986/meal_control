@@ -9,6 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +26,16 @@ public class User {
     @GeneratedValue(strategy = AUTO)
     private Long id;
     private String name;
+    @Email
     private String email;
+    @Min(18)
+    @Max(120)
     private int age;
+    @Min(20)
+    @Max(300)
     private double weight;
+    @Min(50)
+    @Max(300)
     private double height;
     @Enumerated(EnumType.STRING)
     private Gender gender;

@@ -1,5 +1,6 @@
 package ru.maksimlitvinov.nutrition_control.controller.api;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,7 @@ public class DishesController {
     }
 
     @PostMapping
-    public DishDto create(@RequestBody DishCreateDTO dishDto) {
+    public DishDto create(@RequestBody @Valid DishCreateDTO dishDto) {
         var dish = dishMapper.toEntity(dishDto);
         dishRepository.save(dish);
         return dishMapper.toDishDto(dish);

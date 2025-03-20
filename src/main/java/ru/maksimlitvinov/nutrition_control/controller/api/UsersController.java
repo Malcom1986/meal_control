@@ -1,6 +1,7 @@
 package ru.maksimlitvinov.nutrition_control.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,7 +49,7 @@ public class UsersController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO create(@RequestBody UserCreateDTO userDTO) {
+    public UserDTO create(@RequestBody @Valid UserCreateDTO userDTO) {
         var user = userMapper.toEntity(userDTO);
         userRepository.save(user);
         return userMapper.toUserDTO(user);
