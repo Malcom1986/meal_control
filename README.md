@@ -15,6 +15,8 @@ make start
 
 Откройте интерактивную документацию по адресу http://localhost:8080/swagger-ui/index.html
 
+Файл *Nutrition Control.postman_collection.json* содержит Postman коллекцию для работы с приложением
+
 ## Запуск тестов
 
 ```bash
