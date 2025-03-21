@@ -30,10 +30,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.instancio:instancio-junit:3.3.0")
 	implementation("net.datafaker:datafaker:2.4.2")
+	implementation("org.flywaydb:flyway-core:11.4.0")
+	implementation("org.flywaydb:flyway-database-postgresql:11.4.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+
 	testImplementation("org.testcontainers:junit-jupiter:1.17.3")
 	testImplementation("org.testcontainers:postgresql:1.17.3")
-
-
 }
 
 tasks.withType<Test> {

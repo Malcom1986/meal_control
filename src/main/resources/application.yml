@@ -1,15 +1,15 @@
 spring:
   application:
     name: nutrition-control
-  jpa:
-    hibernate:
-      ddl-auto: update
+
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
-
-
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
 server:
   port: ${PORT:8080}
 
