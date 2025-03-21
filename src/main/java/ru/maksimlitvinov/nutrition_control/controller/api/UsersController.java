@@ -20,18 +20,15 @@ import ru.maksimlitvinov.nutrition_control.mapper.UserMapper;
 import ru.maksimlitvinov.nutrition_control.model.User;
 import ru.maksimlitvinov.nutrition_control.repository.UserRepository;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class UsersController {
+public class    UsersController {
 
     private final UserRepository userRepository;
-
-    private final ObjectMapper objectMapper;
     private final UserMapper userMapper;
 
     @GetMapping

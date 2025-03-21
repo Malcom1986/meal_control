@@ -4,6 +4,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
   datasource:
-    url: jdbc:postgresql://localhost:5432/malcom?username=malcom&password=qwerty
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+
+server:
+  port: ${PORT:8080}
+
+

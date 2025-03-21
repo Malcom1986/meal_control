@@ -28,6 +28,11 @@ dependencies {
 	implementation("org.postgresql:postgresql:42.7.5")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.instancio:instancio-junit:3.3.0")
+	implementation("net.datafaker:datafaker:2.4.2")
+	testImplementation("org.testcontainers:junit-jupiter:1.17.3")
+	testImplementation("org.testcontainers:postgresql:1.17.3")
+
 
 }
 

@@ -27,6 +27,7 @@ public class User {
     private Long id;
     private String name;
     @Email
+    @Column(unique = true)
     private String email;
     @Min(18)
     @Max(120)
