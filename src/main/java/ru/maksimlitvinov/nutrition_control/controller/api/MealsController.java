@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.server.ResponseStatusException;
 import ru.maksimlitvinov.nutrition_control.dto.meal.MealCreateDto;
 import ru.maksimlitvinov.nutrition_control.dto.meal.MealDto;
 import ru.maksimlitvinov.nutrition_control.exceptions.EntityNotFoundException;
@@ -41,7 +40,7 @@ public class MealsController {
     public MealDto getOne(@PathVariable Long id) {
         Optional<Meal> mealOptional = mealRepository.findById(id);
         var meal =  mealOptional
-                .orElseThrow(() -> new EntityNotFoundException( "Entity with id `%s` not found".formatted(id)));
+                .orElseThrow(() -> new EntityNotFoundException("Entity with id `%s` not found".formatted(id)));
         return mealMapper.toMealDto(meal);
     }
 

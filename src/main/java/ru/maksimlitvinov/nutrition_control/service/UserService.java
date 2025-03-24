@@ -3,10 +3,6 @@ package ru.maksimlitvinov.nutrition_control.service;
 import org.springframework.stereotype.Service;
 import ru.maksimlitvinov.nutrition_control.model.User;
 
-import static ru.maksimlitvinov.nutrition_control.model.User.Goal.GAIN;
-import static ru.maksimlitvinov.nutrition_control.model.User.Goal.LOSE;
-import static ru.maksimlitvinov.nutrition_control.model.User.Goal.MAINTAIN;
-
 @Service
 public class UserService {
     public double calculateDailyCaloricNorm(User user) {

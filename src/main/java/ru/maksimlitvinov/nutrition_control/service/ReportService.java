@@ -14,7 +14,6 @@ import ru.maksimlitvinov.nutrition_control.repository.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

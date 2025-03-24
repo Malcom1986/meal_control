@@ -1,6 +1,5 @@
 package ru.maksimlitvinov.nutrition_control.dto.dish;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -41,27 +41,27 @@ public class MealControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    MealRepository mealRepository;
+    private MealRepository mealRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    DishRepository dishRepository;
+    private DishRepository dishRepository;
 
     private Meal testMeal;
     private User testUser;
     private Dish testDish;
 
     @Container
-    public static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:latest")
+    private static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:latest")
             .withDatabaseName("test")
             .withUsername("test")
             .withPassword("test")
             .withReuse(true);
 
     @DynamicPropertySource
-    public static void properties(DynamicPropertyRegistry registry) {
+    private static void properties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", database::getJdbcUrl);
         registry.add("spring.datasource.username", database::getUsername);
         registry.add("spring.datasource.password", database::getPassword);

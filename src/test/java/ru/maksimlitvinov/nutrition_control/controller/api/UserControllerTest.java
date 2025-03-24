@@ -37,19 +37,19 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     private User testUser;
 
     @Container
-    public static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:latest")
+    private static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:latest")
             .withDatabaseName("test")
             .withUsername("test")
             .withPassword("test")
             .withReuse(true);
 
     @DynamicPropertySource
-    public static void properties(DynamicPropertyRegistry registry) {
+    private static void properties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", database::getJdbcUrl);
         registry.add("spring.datasource.username", database::getUsername);
         registry.add("spring.datasource.password", database::getPassword);

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Value;
 import ru.maksimlitvinov.nutrition_control.model.User;
 
 /**
@@ -14,24 +13,24 @@ import ru.maksimlitvinov.nutrition_control.model.User;
 @Getter
 @Setter
 public class UserCreateDTO {
-    String name;
+    private String name;
 
     @Email
-    String email;
+    private String email;
 
     @Min(18)
     @Max(120)
-    int age;
+    private int age;
 
     @Min(20)
     @Max(300)
-    double weight;
+    private double weight;
 
     @Min(50)
     @Max(300)
-    double height;
+    private double height;
 
-    User.Gender gender;
+    private User.Gender gender;
 
-    User.Goal goal;
+    private User.Goal goal;
 }

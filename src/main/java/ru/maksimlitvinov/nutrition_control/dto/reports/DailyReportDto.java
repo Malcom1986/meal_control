@@ -3,7 +3,6 @@ package ru.maksimlitvinov.nutrition_control.dto.reports;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.maksimlitvinov.nutrition_control.dto.dish.DishDto;
 import ru.maksimlitvinov.nutrition_control.dto.meal.MealDto;
 
 import java.time.LocalDate;
