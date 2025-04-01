@@ -12,6 +12,5 @@ import java.util.List;
 @Setter
 public class MealCreateDto {
     private String name;
-    private Long user;
     private List<Long> dishes;
 }

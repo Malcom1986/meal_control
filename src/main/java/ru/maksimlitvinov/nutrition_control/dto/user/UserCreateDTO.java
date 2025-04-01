@@ -3,6 +3,7 @@ package ru.maksimlitvinov.nutrition_control.dto.user;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import ru.maksimlitvinov.nutrition_control.model.User;
@@ -17,6 +18,9 @@ public class UserCreateDTO {
 
     @Email
     private String email;
+
+    @Size(min = 3, max = 30)
+    private String password;
 
     @Min(18)
     @Max(120)

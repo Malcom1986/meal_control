@@ -34,9 +34,13 @@ dependencies {
 	implementation("org.flywaydb:flyway-core:11.4.0")
 	implementation("org.flywaydb:flyway-database-postgresql:11.4.0")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("com.h2database:h2:2.3.232")
 
 	testImplementation("org.testcontainers:junit-jupiter:1.17.3")
 	testImplementation("org.testcontainers:postgresql:1.17.3")
+	testImplementation("org.springframework.security:spring-security-test")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 }
 
 tasks.withType<Test> {

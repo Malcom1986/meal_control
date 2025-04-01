@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,15 +20,18 @@ import ru.maksimlitvinov.nutrition_control.model.Meal;
 import ru.maksimlitvinov.nutrition_control.model.User;
 import ru.maksimlitvinov.nutrition_control.repository.DishRepository;
 import ru.maksimlitvinov.nutrition_control.repository.MealRepository;
+import ru.maksimlitvinov.nutrition_control.repository.RoleRepository;
 import ru.maksimlitvinov.nutrition_control.repository.UserRepository;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -47,11 +51,16 @@ public class MealControllerTest {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private DishRepository dishRepository;
 
     private Meal testMeal;
     private User testUser;
     private Dish testDish;
+
+    private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
     @Container
     private static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:latest")
@@ -74,6 +83,8 @@ public class MealControllerTest {
         dishRepository.deleteAll();
 
         testUser = TestUtils.generateUser();
+        var role = roleRepository.findByRoleName("user").orElseThrow();
+        testUser.setRoles(Set.of(role));
         userRepository.save(testUser);
 
         testDish = TestUtils.generateDish();
@@ -83,31 +94,32 @@ public class MealControllerTest {
         testMeal.setUser(testUser);
         testMeal.setDishes(List.of(testDish));
         mealRepository.save(testMeal);
+        token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
+
     }
 
     @Test
     public void testIndex() throws Exception {
-        mockMvc.perform(get("/api/meals"))
+        mockMvc.perform(get("/api/meals").with(jwt()))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testShow() throws Exception {
-        mockMvc.perform(get("/api/meals/{id}", testMeal.getId()))
+        mockMvc.perform(get("/api/meals/{id}", testMeal.getId()).with(jwt()))
                 .andExpect(status().isOk());
     }
 
     @Test
     void testCreate() throws Exception {
         var data = new MealCreateDto();
-        data.setUser(testUser.getId());
         data.setDishes(List.of(testDish.getId()));
         data.setName("testMeal");
 
         var request = post("/api/meals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
-        mockMvc.perform(request)
+        mockMvc.perform(request.with(token))
                 .andExpect(status().isCreated());
 
     }
@@ -117,25 +129,25 @@ public class MealControllerTest {
 
         var request = delete("/api/meals/{id}", testMeal.getId());
 
-        mockMvc.perform(request)
+        mockMvc.perform(request.with(token))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void testDailyMealReport() throws Exception {
-        mockMvc.perform(get("/api/users/{id}/reports/daily", testUser.getId()))
+        mockMvc.perform(get("/api/users/reports/daily", testUser.getId()).with(token))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testTargetMealReport() throws Exception {
-        mockMvc.perform(get("/api/users/{id}/reports/target", testUser.getId()))
+        mockMvc.perform(get("/api/users/reports/target", testUser.getId()).with(token))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testSummaryMealReport() throws Exception {
-        mockMvc.perform(get("/api/users/{id}/reports/summary", testUser.getId()))
+        mockMvc.perform(get("/api/users/reports/summary", testUser.getId()).with(token))
                 .andExpect(status().isOk());
     }
 }

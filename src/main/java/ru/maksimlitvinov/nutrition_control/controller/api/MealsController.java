@@ -16,7 +16,9 @@ import ru.maksimlitvinov.nutrition_control.exceptions.EntityNotFoundException;
 import ru.maksimlitvinov.nutrition_control.mapper.MealMapper;
 import ru.maksimlitvinov.nutrition_control.model.Meal;
 import ru.maksimlitvinov.nutrition_control.repository.MealRepository;
+import ru.maksimlitvinov.nutrition_control.repository.UserRepository;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +29,7 @@ public class MealsController {
 
     private final MealRepository mealRepository;
     private final MealMapper mealMapper;
+    private final UserRepository userRepository;
 
     @GetMapping
     public List<MealDto> getAll() {
@@ -46,8 +49,11 @@ public class MealsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MealDto create(@RequestBody MealCreateDto mealDto) {
+    public MealDto create(@RequestBody MealCreateDto mealDto, Principal principal) {
+
         var meal = mealMapper.toEntity(mealDto);
+        var user = userRepository.findByEmail(principal.getName()).orElseThrow();
+        meal.setUser(user);
         mealRepository.save(meal);
         return mealMapper.toMealDto(meal);
     }
