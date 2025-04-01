@@ -1,9 +1,11 @@
 package ru.maksimlitvinov.nutrition_control.controller.api;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import ru.maksimlitvinov.nutrition_control.model.Dish;
 import ru.maksimlitvinov.nutrition_control.model.Meal;
+import ru.maksimlitvinov.nutrition_control.model.Role;
 import ru.maksimlitvinov.nutrition_control.model.User;
 import net.datafaker.Faker;
 
@@ -15,6 +17,7 @@ public class TestUtils {
     public static User generateUser() {
         return Instancio.of(User.class)
                 .ignore(field(User.class, "id"))
+                .ignore(field(User.class, "roles"))
                 .supply(Select.field(User::getEmail), () -> FAKER.internet().emailAddress())
                 .supply(Select.field(User::getHeight), () -> FAKER.number().numberBetween(100, 180))
                 .supply(Select.field(User::getWeight), () -> FAKER.number().numberBetween(50, 150))
@@ -36,6 +39,10 @@ public class TestUtils {
                 .ignore(Select.field(Meal::getUser))
                 .ignore(Select.field(Meal::getDishes))
                 .create();
+    }
+
+    public static Role generateRole() {
+        return Instancio.of(Role.class).supply(Select.field(Role::getRoleName), () -> "user").create();
     }
 
 

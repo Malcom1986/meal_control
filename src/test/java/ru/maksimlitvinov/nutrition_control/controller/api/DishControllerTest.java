@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -60,13 +61,13 @@ public class DishControllerTest {
 
     @Test
     public void testIndex() throws Exception {
-        mockMvc.perform(get("/api/dishes"))
+        mockMvc.perform(get("/api/dishes").with(jwt()))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testShow() throws Exception {
-        mockMvc.perform(get("/api/dishes/{id}", testDish.getId()))
+        mockMvc.perform(get("/api/dishes/{id}", testDish.getId()).with(jwt()))
                 .andExpect(status().isOk());
     }
 
@@ -77,14 +78,14 @@ public class DishControllerTest {
         var request = post("/api/dishes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
-        mockMvc.perform(request)
+        mockMvc.perform(request.with(jwt()))
                 .andExpect(status().isCreated());
     }
     @Test
     void testDelete() throws Exception {
         var request = delete("/api/dishes/{id}", testDish.getId());
 
-        mockMvc.perform(request)
+        mockMvc.perform(request.with(jwt()))
                 .andExpect(status().isNoContent());
     }
 }

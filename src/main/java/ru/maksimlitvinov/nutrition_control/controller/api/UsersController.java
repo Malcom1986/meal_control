@@ -17,6 +17,7 @@ import ru.maksimlitvinov.nutrition_control.exceptions.EntityNotFoundException;
 import ru.maksimlitvinov.nutrition_control.mapper.UserMapper;
 import ru.maksimlitvinov.nutrition_control.model.User;
 import ru.maksimlitvinov.nutrition_control.repository.UserRepository;
+import ru.maksimlitvinov.nutrition_control.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +27,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsersController {
 
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final UserService userService;
 
     @GetMapping
     public List<UserDTO> getAll() {
@@ -45,10 +48,10 @@ public class UsersController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@RequestBody @Valid UserCreateDTO userDTO) {
-        var user = userMapper.toEntity(userDTO);
-        userRepository.save(user);
+        var user = userService.createAndReturnUser(userDTO);
         return userMapper.toUserDTO(user);
     }
+    
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {

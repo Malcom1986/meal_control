@@ -2,15 +2,14 @@ spring:
   application:
     name: nutrition-control
 
-  datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
   flyway:
     enabled: true
     baseline-on-migrate: true
-    baseline-version: 0
+    baseline-version: 1
+
 server:
   port: ${PORT:8080}
 
-
+rsa:
+  private-key: classpath:certificates/private.pem
+  public-key: classpath:certificates/public.pem

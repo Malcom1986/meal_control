@@ -18,6 +18,7 @@ services:
       DATABASE_URL: jdbc:postgresql://db:5432/postgres
       DATABASE_USERNAME: malcom
       DATABASE_PASSWORD: qwerty
+      SPRING_PROFILES_ACTIVE: prod
 
     ports:
       - "8080:8080"

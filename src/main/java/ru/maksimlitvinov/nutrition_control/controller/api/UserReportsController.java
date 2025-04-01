@@ -1,6 +1,8 @@
 package ru.maksimlitvinov.nutrition_control.controller.api;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,35 +10,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.maksimlitvinov.nutrition_control.dto.meal.MealDto;
 import ru.maksimlitvinov.nutrition_control.dto.reports.DailyReportDto;
 import ru.maksimlitvinov.nutrition_control.dto.reports.DailyTargetReportDto;
+import ru.maksimlitvinov.nutrition_control.model.User;
+import ru.maksimlitvinov.nutrition_control.repository.UserRepository;
 import ru.maksimlitvinov.nutrition_control.service.ReportService;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users/{id}/reports")
+@RequestMapping("/api/users/reports")
 @AllArgsConstructor
 public class UserReportsController {
 
     private final ReportService reportService;
 
-    @GetMapping("daily")
-    public DailyReportDto getDailyReport(@PathVariable long id) {
+    private final UserRepository userRepository;
+
+    @GetMapping("/daily")
+    public DailyReportDto getDailyReport(Authentication principal) {
         var today = LocalDate.now();
-        return reportService.getDailyReport(id, today);
+        var currentUser = userRepository.findByEmail(principal.getName()).orElseThrow();
+        return reportService.getDailyReport(currentUser.getId(), today);
     }
 
-    @GetMapping("target")
-    public DailyTargetReportDto getDailyTargetReport(@PathVariable long id) {
+    @GetMapping("/target")
+    public DailyTargetReportDto getDailyTargetReport(Principal principal) {
         var today = LocalDate.now();
-        return reportService.getDailyTargetReport(id, today);
+        var currentUser = userRepository.findByEmail(principal.getName()).orElseThrow();
+        return reportService.getDailyTargetReport(currentUser.getId(), today);
     }
 
-    @GetMapping("summary")
-    public List<MealDto> getSummaryReport(@PathVariable long id) {
-        return reportService.getSummaryReport(id);
+    @GetMapping("/summary")
+    public List<MealDto> getSummaryReport(Principal principal) {
+        var currentUser = userRepository.findByEmail(principal.getName()).orElseThrow();
+        return reportService.getSummaryReport(currentUser.getId());
     }
-
-
 }
 

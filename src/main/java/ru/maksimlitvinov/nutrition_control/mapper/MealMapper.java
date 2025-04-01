@@ -29,11 +29,6 @@ public abstract class MealMapper {
     @Mapping(source = "user.id", target = "user")
     public abstract MealDto toMealDto(Meal meal);
 
-    public User toUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-    }
-
     public List<Dish> toDishes(List<Long> dishIds) {
         return dishIds.stream()
                 .map((dishId) -> dishRepository.findById(dishId)
