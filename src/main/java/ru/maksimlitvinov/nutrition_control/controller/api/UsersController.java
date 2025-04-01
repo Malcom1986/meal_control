@@ -51,7 +51,7 @@ public class UsersController {
         var user = userService.createAndReturnUser(userDTO);
         return userMapper.toUserDTO(user);
     }
-    
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {

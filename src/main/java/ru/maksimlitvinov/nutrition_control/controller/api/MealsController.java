@@ -2,9 +2,6 @@ package ru.maksimlitvinov.nutrition_control.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +15,6 @@ import ru.maksimlitvinov.nutrition_control.dto.meal.MealDto;
 import ru.maksimlitvinov.nutrition_control.exceptions.EntityNotFoundException;
 import ru.maksimlitvinov.nutrition_control.mapper.MealMapper;
 import ru.maksimlitvinov.nutrition_control.model.Meal;
-import ru.maksimlitvinov.nutrition_control.model.User;
 import ru.maksimlitvinov.nutrition_control.repository.MealRepository;
 import ru.maksimlitvinov.nutrition_control.repository.UserRepository;
 

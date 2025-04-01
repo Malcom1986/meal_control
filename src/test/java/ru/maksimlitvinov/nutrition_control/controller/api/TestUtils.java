@@ -1,6 +1,5 @@
 package ru.maksimlitvinov.nutrition_control.controller.api;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import ru.maksimlitvinov.nutrition_control.model.Dish;
